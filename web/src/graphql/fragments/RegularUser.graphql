@@ -1,0 +1,11 @@
+fragment RegularUser on User {
+    id
+    name
+    accountsLinked
+    google_linked
+    github_linked
+    email
+    createdAt
+    updatedAt
+    __typename
+}

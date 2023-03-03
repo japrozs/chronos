@@ -1,0 +1,9 @@
+fragment RegularFile on File {
+    provider
+    title
+    url
+    type
+    extension
+    createdAt
+    __typename
+}

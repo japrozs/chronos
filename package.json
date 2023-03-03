@@ -1,0 +1,8 @@
+{
+    "name": "chronos",
+    "private": true,
+    "npmClient": "yarn",
+    "devDependencies": {
+        "lerna": "^4.0.0"
+    }
+}

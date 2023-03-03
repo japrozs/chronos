@@ -1,0 +1,5 @@
+query GetFiles {
+    getFiles {
+        ...RegularFile
+    }
+}

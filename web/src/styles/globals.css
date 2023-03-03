@@ -1,0 +1,27 @@
+@import url("https://rsms.me/inter/inter.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    background-color: #000;
+    font-family: -apple-system, "Inter";
+    color: white;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+input[data-autocompleted] {
+    background-color: transparent !important;
+}
+
+.menlo {
+    font-family: "Menlo", monospace;
+}
