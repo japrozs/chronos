@@ -1,4 +1,5 @@
 [ ] - Create settings page  
+[x] - Add github as provider
 [ ] - Finish landing page  
 [ ] - T&C, Privacy Policy  
 [ ] - Prepare code for deployment (ENV vars, uri's, etc..)  
