@@ -13,10 +13,20 @@ export const search = (
     const results = files.filter((file) => {
         return file.title
             .trim()
+            .replaceAll("-", "")
+            .replaceAll(".", "")
             .split(" ")
             .join("")
             .toLowerCase()
-            .includes(query.trim().split(" ").join("").toLowerCase());
+            .includes(
+                query
+                    .trim()
+                    .replaceAll("-", "")
+                    .replaceAll(".", "")
+                    .split(" ")
+                    .join("")
+                    .toLowerCase()
+            );
     });
     const timeTaken = Date.now() - start;
     return {

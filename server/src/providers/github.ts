@@ -99,6 +99,7 @@ export const parseGithubRepos = (
     }[]
 ) => {
     for (let i = 0; i < repos.length; ++i) {
+        console.log("repo :: ", repos[i].name);
         arr.push({
             provider: "github",
             type: "github_repo",

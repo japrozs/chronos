@@ -22,11 +22,14 @@ const App: React.FC<AppProps> = ({}) => {
     const [result, setResult] = useState({});
 
     useEffect(() => {
-        setTimeout(() => {
-            if (data !== undefined && query.trim().length != 0) {
+        const fn = setTimeout(() => {
+            if (query.trim().length == 0) {
+                setResult({});
+            } else if (data !== undefined) {
                 setResult(search(query, data.getFiles));
             }
         }, 1000);
+        return () => clearTimeout(fn);
     }, [query]);
 
     return (
@@ -89,7 +92,7 @@ const App: React.FC<AppProps> = ({}) => {
                                     result
                                     {(result as SearchResult).results.length !=
                                         1 && "s"}{" "}
-                                    in {(result as SearchResult).time}ms
+                                    in {(result as SearchResult).time}ms{" "}
                                 </p>
                                 {(result as SearchResult).results.length !=
                                 0 ? (
