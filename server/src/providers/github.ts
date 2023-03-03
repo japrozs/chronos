@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Application, Request, Response } from "express";
 import querystring from "querystring";
 import { User } from "../entities/User";
@@ -46,17 +46,44 @@ export const getGithubRepos = async (token: string) => {
             })
     ).repos_url;
 
-    return axios
-        .get(reposUrl, {
+    const resObject: AxiosResponse = (await axios
+        .get(`${reposUrl}?per_page=1000`, {
             headers: {
                 Accept: "application/vnd.github+json",
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then((res) => res.data)
+        .then((res) => {
+            console.log("headers :: ", res.headers);
+            return res;
+        })
         .catch((err: Error) => {
             console.error(`Failed to fetch user repos`);
-        });
+        })) as AxiosResponse;
+
+    const arr = [...resObject.data];
+
+    let link: string = resObject.headers.link.split(">")[0];
+    link = link.substring(1, link.length);
+    while (!link.endsWith("&page=1")) {
+        const data = (await axios
+            .get(link, {
+                headers: {
+                    Accept: "application/vnd.github+json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                return res;
+            })
+            .catch((err: Error) => {
+                console.error(`Failed to fetch user repos`);
+            })) as AxiosResponse;
+        link = data.headers.link.split(">")[0];
+        arr.push(...data.data);
+    }
+
+    return arr;
 };
 
 export const getGithubIssues = async (
