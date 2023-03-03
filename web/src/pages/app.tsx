@@ -84,8 +84,8 @@ const App: React.FC<AppProps> = ({}) => {
                             />
                         </div>
                         {data !== undefined &&
-                        query.trim().length != 0 &&
-                        Object.keys(result).length != 0 ? (
+                        Object.keys(result).length != 0 &&
+                        query.trim().length != 0 ? (
                             <div className="transition-all">
                                 <p className="mt-6 text-smol font-medium text-gray-700">
                                     {(result as SearchResult).results.length}{" "}

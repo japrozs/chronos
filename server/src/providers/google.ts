@@ -83,7 +83,7 @@ export const getGoogleDriveFiles = async (token: string) => {
                     )
                     .then((res) => res.data)
                     .catch((error: Error) => {
-                        console.error(`Failed to fetch auth tokens`);
+                        console.error("Failed to fetch auth tokens");
                         return { error: error.message };
                     });
                 arr.push(result);
