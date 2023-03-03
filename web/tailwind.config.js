@@ -8,7 +8,18 @@ module.exports = {
     ],
     theme: {
         extend: {
+            backgroundImage: {
+                scribbles: "url('/images/scribbles.png')",
+                scribbles_blue: "url('/images/scribbles_blue.png')",
+            },
+            screens: {
+                mid: "870px",
+            },
+            spacing: {
+                90: "22.5rem",
+            },
             fontSize: {
+                tiny: "0.89rem",
                 smol: "0.95rem",
             },
             colors: {
