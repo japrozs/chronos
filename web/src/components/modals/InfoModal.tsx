@@ -86,7 +86,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, setOpen }) => {
                                 </p>
 
                                 <p className="text-center mt-10 text-gray-400 text-sm">
-                                    Chronos is made with{" "}
+                                    Made with{" "}
                                     <span style={{ fontFamily: "Helvetica" }}>
                                         ❤️
                                     </span>{" "}

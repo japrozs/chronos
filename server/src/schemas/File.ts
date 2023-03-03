@@ -18,5 +18,8 @@ export class File {
     extension: string;
 
     @Field()
+    kind: string;
+
+    @Field()
     createdAt: string;
 }

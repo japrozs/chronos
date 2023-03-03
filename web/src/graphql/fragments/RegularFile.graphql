@@ -3,6 +3,7 @@ fragment RegularFile on File {
     title
     url
     type
+    kind
     extension
     createdAt
     __typename

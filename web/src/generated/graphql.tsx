@@ -25,6 +25,7 @@ export type File = {
   __typename?: 'File';
   createdAt: Scalars['String'];
   extension: Scalars['String'];
+  kind: Scalars['String'];
   provider: Scalars['String'];
   title: Scalars['String'];
   type: Scalars['String'];
@@ -100,7 +101,7 @@ export type UserResponse = {
 
 export type RegularErrorFragment = { __typename?: 'FieldError', field: string, message: string };
 
-export type RegularFileFragment = { __typename: 'File', provider: string, title: string, url: string, type: string, extension: string, createdAt: string };
+export type RegularFileFragment = { __typename: 'File', provider: string, title: string, url: string, type: string, kind: string, extension: string, createdAt: string };
 
 export type RegularUserFragment = { __typename: 'User', id: number, name: string, accountsLinked: number, google_linked: boolean, github_linked: boolean, email: string, createdAt: string, updatedAt: string };
 
@@ -129,7 +130,7 @@ export type RegisterMutation = { __typename?: 'Mutation', register: { __typename
 export type GetFilesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFilesQuery = { __typename?: 'Query', getFiles: Array<{ __typename: 'File', provider: string, title: string, url: string, type: string, extension: string, createdAt: string }> };
+export type GetFilesQuery = { __typename?: 'Query', getFiles: Array<{ __typename: 'File', provider: string, title: string, url: string, type: string, kind: string, extension: string, createdAt: string }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -142,6 +143,7 @@ export const RegularFileFragmentDoc = gql`
   title
   url
   type
+  kind
   extension
   createdAt
   __typename

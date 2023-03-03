@@ -23,8 +23,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ file }) => {
                         {file.title}
                     </p>
                     <p className="mt-1 text-gray-500">
-                        {getDisplayName(file.provider)}
-                        {file.type == "github_repo" && " – Repository"}
+                        {getDisplayName(file.provider)} – {file.kind}
                     </p>
                 </div>
                 <div className="text-right">

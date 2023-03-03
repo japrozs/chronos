@@ -43,6 +43,9 @@ export const parseGoogleFilesResult = (arr: File[], result_arr: any) => {
                 createdAt: resultObj.files[item].createdTime,
                 type: resultObj.files[item].mimeType,
                 url: resultObj.files[item].webViewLink,
+                kind: resultObj.files[item].mimeType.includes("folder")
+                    ? "Folder"
+                    : "File",
                 extension: resultObj.files[item].fileExtension || "",
             });
         }

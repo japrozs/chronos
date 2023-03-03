@@ -1,6 +1,12 @@
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, {
+    KeyboardEvent,
+    LegacyRef,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { FiSearch } from "react-icons/fi";
@@ -69,6 +75,7 @@ const App: React.FC<AppProps> = ({}) => {
                         <div className="flex items-center bg-dark-compliment-hovered rounded-md border border-gray-800">
                             <FiSearch className="text-2xl text-gray-500 m-4" />
                             <input
+                                autoFocus
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 className="w-full h-full py-3 bg-transparent focus:outline-none placeholder-gray-500 text-gray-300"
@@ -126,7 +133,7 @@ const App: React.FC<AppProps> = ({}) => {
                                     src="/images/type_something.png"
                                 />
                                 <p className="mx-auto text-center mt-1 font-medium text-gray-600">
-                                    Search for docs, github repos
+                                    Search for google docs, github repos
                                     <br /> and much more ...
                                 </p>
                             </div>

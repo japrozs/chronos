@@ -132,6 +132,7 @@ export const parseGithubRepos = (
             type: "github_repo",
             url: repos[i].html_url,
             title: repos[i].name,
+            kind: "Repository",
             createdAt: repos[i].created_at,
             extension: repos[i].default_branch,
         });
@@ -152,6 +153,7 @@ export const parseGithubIssues = (
             provider: "github",
             type: "github_repo",
             url: issues[i].html_url,
+            kind: "Issue",
             title: issues[i].title,
             createdAt: issues[i].created_at,
             extension: issues[i].state === "open" ? "open" : "closed",
