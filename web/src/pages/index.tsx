@@ -1,5 +1,6 @@
 import { Banner } from "@/components/shared/Banner";
 import { Footer } from "@/components/shared/Footer";
+import { Meta } from "@/components/shared/Meta";
 import { Button } from "@/components/ui/Button";
 import { useIsAuth } from "@/utils/useIsAuth";
 import { Disclosure } from "@headlessui/react";
@@ -10,6 +11,7 @@ export default function Home() {
     useIsAuth();
     return (
         <>
+            <Meta title="Chronos – Spotlight search for all your cloud apps" />
             <Banner />
             <div
                 style={{
@@ -105,7 +107,7 @@ export default function Home() {
                 <div className="w-full shadow">
                     <img
                         className="transition-all mb-6 md:mb-0 w-full h-auto rounded-lg"
-                        src="/images/screenshot.png"
+                        src="/images/integrations.png"
                     />
                 </div>
             </div>
@@ -199,42 +201,42 @@ export default function Home() {
                 </p>
                 <div className="flex items-center justify-center flex-wrap">
                     <Image
-                        className="w-16 h-16 mx-5 my-2"
+                        className="w-16 h-16 mx-5 my-4 mid:my-2"
                         src={`/providers/google.svg`}
                         alt=""
                         width={10}
                         height={10}
                     />
                     <Image
-                        className="w-16 h-16 mx-5 my-2"
+                        className="w-16 h-16 mx-5 my-4 mid:my-2"
                         src={`/providers/github.svg`}
                         alt=""
                         width={10}
                         height={10}
                     />
                     <Image
-                        className="w-16 h-16 mx-5 my-2"
+                        className="w-16 h-16 mx-5 my-4 mid:my-2"
                         src={`/providers/dropbox.svg`}
                         alt=""
                         width={10}
                         height={10}
                     />
                     <Image
-                        className="w-16 h-16 mx-5 my-2"
+                        className="w-16 h-16 mx-5 my-4 mid:my-2"
                         src={`/providers/figma.svg`}
                         alt=""
                         width={10}
                         height={10}
                     />
                     <Image
-                        className="w-16 h-16 mx-5 my-2"
+                        className="w-16 h-16 mx-5 my-4 mid:my-2"
                         src={`/providers/notion.svg`}
                         alt=""
                         width={10}
                         height={10}
                     />
                     <Image
-                        className="w-16 h-16 mx-5 my-2"
+                        className="w-16 h-16 mx-5 my-4 mid:my-2"
                         src={`/providers/one_drive.svg`}
                         alt=""
                         width={10}

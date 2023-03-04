@@ -1,3 +1,4 @@
+import { Meta } from "@/components/shared/Meta";
 import { Button } from "@/components/ui/Button";
 import { InputField } from "@/components/ui/InputField";
 import { useRegisterMutation } from "@/generated/graphql";
@@ -18,6 +19,7 @@ const Signup: React.FC<SignupProps> = ({}) => {
     const client = useApolloClient();
     return (
         <div>
+            <Meta title="Chronos – Sign up" />
             <div className="h-screen">
                 <div className="px-6 py-5 z-10">
                     <a href="/">

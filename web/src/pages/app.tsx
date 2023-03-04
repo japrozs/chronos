@@ -23,6 +23,7 @@ import { BiQuestionMark } from "react-icons/bi";
 import { InfoModal } from "@/components/modals/InfoModal";
 import { SettingsModal } from "@/components/modals/SettingsModal";
 import { Navbar } from "@/components/shared/Navbar";
+import { Meta } from "@/components/shared/Meta";
 
 interface AppProps {}
 
@@ -47,6 +48,7 @@ const App: React.FC<AppProps> = ({}) => {
 
     return (
         <>
+            <Meta title="Chronos" />
             <Navbar me={me?.me} />
             <div className="p-6 w-full">
                 {loading ? (

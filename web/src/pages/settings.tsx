@@ -1,3 +1,4 @@
+import { Meta } from "@/components/shared/Meta";
 import { Navbar } from "@/components/shared/Navbar";
 import { Spinner } from "@/components/shared/Spinner";
 import { Button } from "@/components/ui/Button";
@@ -18,6 +19,7 @@ const Settings: React.FC<SettingsProps> = ({}) => {
     const { data, loading } = useMeQuery();
     return (
         <div>
+            <Meta title="Chronos – Settings" />
             {loading ? (
                 <div className="flex h-screen w-screen items-center justify-center">
                     <Spinner />
