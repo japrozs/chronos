@@ -1,14 +1,21 @@
 import { Button } from "@/components/ui/Button";
 import { InputField } from "@/components/ui/InputField";
+import { useLoginMutation } from "@/generated/graphql";
+import { toErrorMap } from "@/utils/toErrorMap";
 import { useIsAuth } from "@/utils/useIsAuth";
+import { useApolloClient } from "@apollo/client";
 import { Form, Formik } from "formik";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {
     useIsAuth();
+    const [loginMut, { loading }] = useLoginMutation();
+    const client = useApolloClient();
+    const router = useRouter();
     return (
         <div>
             <div className="h-screen">
@@ -33,7 +40,22 @@ const Login: React.FC<LoginProps> = ({}) => {
                     <Formik
                         initialValues={{ email: "", password: "" }}
                         onSubmit={async (values, { setErrors }) => {
-                            console.log("submitting login form...");
+                            const response = await loginMut({
+                                variables: values,
+                            });
+                            if (response.data?.login.errors) {
+                                setErrors(
+                                    toErrorMap(response.data.login.errors)
+                                );
+                            } else if (response.data?.login.user) {
+                                if (typeof router.query.next === "string") {
+                                    router.push(router.query.next);
+                                } else {
+                                    // worked
+                                    await client.resetStore();
+                                    router.push("/app");
+                                }
+                            }
                         }}
                     >
                         {({ isSubmitting }) => (
@@ -50,6 +72,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                                     label="Password"
                                 />
                                 <Button
+                                    loading={loading}
                                     type="submit"
                                     label="Log in"
                                     className="mt-5"

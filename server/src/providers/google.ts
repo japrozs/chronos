@@ -180,19 +180,16 @@ const googleOAuthCallback = async (req: Request, res: Response) => {
     });
 
     if (req.session.userId && !resultObj.error) {
-        const user_before = await User.findOne(req.session.userId);
         await User.update(
             { id: req.session.userId },
             {
                 googleRefreshToken: resultObj.refresh_token,
-                google_linked: true,
-                accountsLinked: user_before.accountsLinked + 1,
+                googleLinked: true,
             }
         );
-        const user = await User.findOne(req.session.userId);
-        res.json(user);
+        res.redirect("http://localhost:3000/settings");
     } else {
-        res.json({ error: "req.session.userId is undefined" });
+        res.redirect("http://localhost:3000/settings");
     }
 };
 

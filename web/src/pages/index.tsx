@@ -2,6 +2,7 @@ import { Banner } from "@/components/shared/Banner";
 import { Footer } from "@/components/shared/Footer";
 import { Button } from "@/components/ui/Button";
 import { useIsAuth } from "@/utils/useIsAuth";
+import { Disclosure } from "@headlessui/react";
 import Image from "next/image";
 import { BiRightArrowAlt } from "react-icons/bi";
 
@@ -260,9 +261,9 @@ export default function Home() {
                         />
                     </div>
                     <p className="text-left text-tiny mr-auto ml-2.5">
-                        <span className="font-medium">Justin Watt</span>
+                        <span className="font-medium">Pritpal Saini</span>
                         <br />
-                        <span>Director of Ops & Marketing, MetaLab</span>
+                        <span>Founder and CEO, 89 Alkaline</span>
                     </p>
                 </div>
             </div>

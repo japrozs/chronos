@@ -39,6 +39,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
+  unlinkProvider: Scalars['Boolean'];
   updateName: Scalars['Boolean'];
 };
 
@@ -65,6 +66,11 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationUnlinkProviderArgs = {
+  provider: Scalars['String'];
+};
+
+
 export type MutationUpdateNameArgs = {
   name: Scalars['String'];
 };
@@ -77,11 +83,10 @@ export type Query = {
 
 export type User = {
   __typename?: 'User';
-  accountsLinked: Scalars['Float'];
   createdAt: Scalars['String'];
   email: Scalars['String'];
-  github_linked: Scalars['Boolean'];
-  google_linked: Scalars['Boolean'];
+  githubLinked: Scalars['Boolean'];
+  googleLinked: Scalars['Boolean'];
   id: Scalars['Float'];
   name: Scalars['String'];
   updatedAt: Scalars['String'];
@@ -103,9 +108,9 @@ export type RegularErrorFragment = { __typename?: 'FieldError', field: string, m
 
 export type RegularFileFragment = { __typename: 'File', provider: string, title: string, url: string, type: string, kind: string, extension: string, createdAt: string };
 
-export type RegularUserFragment = { __typename: 'User', id: number, name: string, accountsLinked: number, google_linked: boolean, github_linked: boolean, email: string, createdAt: string, updatedAt: string };
+export type RegularUserFragment = { __typename: 'User', id: number, name: string, googleLinked: boolean, githubLinked: boolean, email: string, createdAt: string, updatedAt: string };
 
-export type RegularUserResponseFragment = { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename: 'User', id: number, name: string, accountsLinked: number, google_linked: boolean, github_linked: boolean, email: string, createdAt: string, updatedAt: string } | null };
+export type RegularUserResponseFragment = { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename: 'User', id: number, name: string, googleLinked: boolean, githubLinked: boolean, email: string, createdAt: string, updatedAt: string } | null };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -113,7 +118,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename: 'User', id: number, name: string, accountsLinked: number, google_linked: boolean, github_linked: boolean, email: string, createdAt: string, updatedAt: string } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename: 'User', id: number, name: string, googleLinked: boolean, githubLinked: boolean, email: string, createdAt: string, updatedAt: string } | null } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -125,7 +130,14 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename: 'User', id: number, name: string, accountsLinked: number, google_linked: boolean, github_linked: boolean, email: string, createdAt: string, updatedAt: string } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename: 'User', id: number, name: string, googleLinked: boolean, githubLinked: boolean, email: string, createdAt: string, updatedAt: string } | null } };
+
+export type UnlinkProviderMutationVariables = Exact<{
+  provider: Scalars['String'];
+}>;
+
+
+export type UnlinkProviderMutation = { __typename?: 'Mutation', unlinkProvider: boolean };
 
 export type GetFilesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -135,7 +147,7 @@ export type GetFilesQuery = { __typename?: 'Query', getFiles: Array<{ __typename
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename: 'User', id: number, name: string, accountsLinked: number, google_linked: boolean, github_linked: boolean, email: string, createdAt: string, updatedAt: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename: 'User', id: number, name: string, googleLinked: boolean, githubLinked: boolean, email: string, createdAt: string, updatedAt: string } | null };
 
 export const RegularFileFragmentDoc = gql`
     fragment RegularFile on File {
@@ -159,9 +171,8 @@ export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   id
   name
-  accountsLinked
-  google_linked
-  github_linked
+  googleLinked
+  githubLinked
   email
   createdAt
   updatedAt
@@ -276,6 +287,37 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const UnlinkProviderDocument = gql`
+    mutation UnlinkProvider($provider: String!) {
+  unlinkProvider(provider: $provider)
+}
+    `;
+export type UnlinkProviderMutationFn = Apollo.MutationFunction<UnlinkProviderMutation, UnlinkProviderMutationVariables>;
+
+/**
+ * __useUnlinkProviderMutation__
+ *
+ * To run a mutation, you first call `useUnlinkProviderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnlinkProviderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unlinkProviderMutation, { data, loading, error }] = useUnlinkProviderMutation({
+ *   variables: {
+ *      provider: // value for 'provider'
+ *   },
+ * });
+ */
+export function useUnlinkProviderMutation(baseOptions?: Apollo.MutationHookOptions<UnlinkProviderMutation, UnlinkProviderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnlinkProviderMutation, UnlinkProviderMutationVariables>(UnlinkProviderDocument, options);
+      }
+export type UnlinkProviderMutationHookResult = ReturnType<typeof useUnlinkProviderMutation>;
+export type UnlinkProviderMutationResult = Apollo.MutationResult<UnlinkProviderMutation>;
+export type UnlinkProviderMutationOptions = Apollo.BaseMutationOptions<UnlinkProviderMutation, UnlinkProviderMutationVariables>;
 export const GetFilesDocument = gql`
     query GetFiles {
   getFiles {

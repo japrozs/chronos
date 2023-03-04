@@ -31,6 +31,7 @@ import {
     parseGithubIssues,
     parseGithubRepos,
 } from "../providers/github";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @ObjectType()
 export class FieldError {
@@ -157,7 +158,7 @@ export class UserResolver {
         const token = await getGoogleAccessToken(user.googleRefreshToken);
         const promises: Promise<unknown>[] = [];
         let file_arr: File[] = [];
-        if (user.google_linked) {
+        if (user.googleLinked) {
             promises.push(
                 new Promise(async (resolve) => {
                     // result from google drive
@@ -169,7 +170,7 @@ export class UserResolver {
                 })
             );
         }
-        if (user.github_linked) {
+        if (user.githubLinked) {
             promises.push(
                 new Promise(async (resolve) => {
                     // result from github API
@@ -297,6 +298,38 @@ export class UserResolver {
                 name,
             }
         );
+        return true;
+    }
+
+    @UseMiddleware(isAuth)
+    @Mutation(() => Boolean)
+    async unlinkProvider(
+        @Arg("provider") provider: string,
+        @Ctx() { req }: Context
+    ) {
+        let key: string;
+        switch (provider.toLowerCase()) {
+            case "google":
+                key = "googleLinked";
+                break;
+            case "github":
+                key = "githubLinked";
+                break;
+            default:
+                key = "";
+        }
+        if (key === "") {
+            return false;
+        }
+
+        await getConnection()
+            .createQueryBuilder()
+            .update(User)
+            .set({
+                [key]: false,
+            })
+            .where("id = :id", { id: req.session.userId })
+            .execute();
         return true;
     }
 }

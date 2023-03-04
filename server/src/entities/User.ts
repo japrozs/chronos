@@ -20,19 +20,15 @@ export class User extends BaseEntity {
     name: string;
 
     @Field()
-    @Column({ default: 0 })
-    accountsLinked: number;
-
-    @Field()
     @Column({ default: false })
-    github_linked: boolean;
+    githubLinked: boolean;
 
     @Column({ default: "" })
     githubAccessToken: string;
 
     @Field()
     @Column({ default: false })
-    google_linked: boolean;
+    googleLinked: boolean;
 
     @Column({ default: "" })
     googleRefreshToken: string;

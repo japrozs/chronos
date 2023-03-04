@@ -1,0 +1,3 @@
+mutation UnlinkProvider($provider: String!) {
+    unlinkProvider(provider: $provider)
+}

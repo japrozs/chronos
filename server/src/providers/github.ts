@@ -202,21 +202,22 @@ const githubOAuthCallback = async (req: Request, res: Response) => {
             redirectUri: `http://localhost:4000/${GITHUB_REDIRECT_URI}`,
         })
     ) as unknown as OAuthToken;
+    if (!resultObj.access_token) {
+        // broken
+        return res.redirect("http://localhost:3000/settings");
+    }
 
     if (req.session.userId) {
-        const user_before = await User.findOne(req.session.userId);
         await User.update(
             { id: req.session.userId },
             {
                 githubAccessToken: resultObj.access_token,
-                github_linked: true,
-                accountsLinked: user_before.accountsLinked + 1,
+                githubLinked: true,
             }
         );
-        const user = await User.findOne(req.session.userId);
-        res.json(user);
+        res.redirect("http://localhost:3000/settings");
     } else {
-        res.json({ error: "req.session.userId is undefined" });
+        res.redirect("http://localhost:3000/settings");
     }
 };
 

@@ -1,14 +1,21 @@
 import { Button } from "@/components/ui/Button";
 import { InputField } from "@/components/ui/InputField";
+import { useRegisterMutation } from "@/generated/graphql";
+import { toErrorMap } from "@/utils/toErrorMap";
 import { useIsAuth } from "@/utils/useIsAuth";
+import { useApolloClient } from "@apollo/client";
 import { Formik, Form } from "formik";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface SignupProps {}
 
 const Signup: React.FC<SignupProps> = ({}) => {
     useIsAuth();
+    const [registerMut] = useRegisterMutation();
+    const router = useRouter();
+    const client = useApolloClient();
     return (
         <div>
             <div className="h-screen">
@@ -32,7 +39,19 @@ const Signup: React.FC<SignupProps> = ({}) => {
                     <p className="text-5xl font-semibold mb-5">Sign up</p>
                     <Formik
                         initialValues={{ name: "", email: "", password: "" }}
-                        onSubmit={async (values, { setErrors }) => {}}
+                        onSubmit={async (values, { setErrors }) => {
+                            const res = await registerMut({
+                                variables: {
+                                    options: values,
+                                },
+                            });
+                            if (res.data?.register.errors) {
+                                setErrors(toErrorMap(res.data.register.errors));
+                            } else if (res.data?.register.user) {
+                                router.push("/app");
+                                await client.resetStore();
+                            }
+                        }}
                     >
                         {({ isSubmitting }) => (
                             <Form>
@@ -53,6 +72,7 @@ const Signup: React.FC<SignupProps> = ({}) => {
                                     label="Password"
                                 />
                                 <Button
+                                    loading={isSubmitting}
                                     type="submit"
                                     label="Sign up"
                                     className="mt-5"

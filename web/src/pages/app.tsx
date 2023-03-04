@@ -12,17 +12,24 @@ import { RxCross2 } from "react-icons/rx";
 import { FiSearch } from "react-icons/fi";
 import { ResultCard } from "@/components/ui/ResultCard";
 import { Spinner } from "@/components/shared/Spinner";
-import { RegularFileFragment, useGetFilesQuery } from "@/generated/graphql";
+import {
+    RegularFileFragment,
+    useGetFilesQuery,
+    useMeQuery,
+} from "@/generated/graphql";
 import { search, SearchResult } from "@/utils/search";
 import { useIsAuth } from "@/utils/useIsAuth";
 import { BiQuestionMark } from "react-icons/bi";
 import { InfoModal } from "@/components/modals/InfoModal";
+import { SettingsModal } from "@/components/modals/SettingsModal";
+import { Navbar } from "@/components/shared/Navbar";
 
 interface AppProps {}
 
 const App: React.FC<AppProps> = ({}) => {
     useIsAuth();
     const [query, setQuery] = useState("");
+    const { data: me } = useMeQuery();
     const { data, loading } = useGetFilesQuery();
     const [open, setOpen] = useState(false);
     const [result, setResult] = useState({});
@@ -40,31 +47,7 @@ const App: React.FC<AppProps> = ({}) => {
 
     return (
         <>
-            <div
-                style={{
-                    borderColor: "#161c2a",
-                }}
-                className="px-6 py-3 bg-black border-b  top-0 sticky"
-            >
-                <div className="flex items-center">
-                    <a href="/app">
-                        <Image
-                            src="/logo.svg"
-                            className="h-8 w-auto"
-                            height={20}
-                            width={20}
-                            alt="logo"
-                        />
-                    </a>
-                    <div className="ml-auto mr-0">
-                        <Button
-                            className="px-2.5 py-2 border-none text-text-compliment-color hover:text-white hover:bg-dark-compliment-hovered"
-                            label=""
-                            icon={BsThreeDots}
-                        />
-                    </div>
-                </div>
-            </div>
+            <Navbar me={me?.me} />
             <div className="p-6 w-full">
                 {loading ? (
                     <div className="pt-20">

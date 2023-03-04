@@ -6,7 +6,7 @@ interface SpinnerProps {
 
 export const Spinner: React.FC<SpinnerProps> = ({ className }) => {
     return (
-        <div className="flex items-center justify-center">
+        <div className=" flex items-center justify-center">
             <svg
                 aria-hidden="true"
                 className={`${
