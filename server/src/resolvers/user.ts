@@ -153,17 +153,35 @@ export class UserResolver {
     @UseMiddleware(isAuth)
     @Query(() => [File])
     async getFiles(@Ctx() { req }: Context) {
-        const user = await User.findOne(req.session.userId);
+        const user: User = await User.findOne(req.session.userId);
         const token = await getGoogleAccessToken(user.googleRefreshToken);
+        const promises: Promise<unknown>[] = [];
         let file_arr: File[] = [];
-        // result from google drive
-        const googleDriveFiles = await getGoogleDriveFiles(token);
-        await parseGoogleFilesResult(file_arr, googleDriveFiles);
-
-        // result from github API
-        const repos = await getGithubRepos(user.githubAccessToken);
-        // const issues = await getGithubIssues(user.githubAccessToken, repos);
-        parseGithubRepos(file_arr, repos);
+        if (user.google_linked) {
+            promises.push(
+                new Promise(async (resolve) => {
+                    // result from google drive
+                    await parseGoogleFilesResult(
+                        file_arr,
+                        await getGoogleDriveFiles(token)
+                    );
+                    resolve(true);
+                })
+            );
+        }
+        if (user.github_linked) {
+            promises.push(
+                new Promise(async (resolve) => {
+                    // result from github API
+                    const repos = await getGithubRepos(user.githubAccessToken);
+                    // const issues = await getGithubIssues(user.githubAccessToken, repos);
+                    parseGithubRepos(file_arr, repos);
+                    resolve(true);
+                })
+            );
+        }
+        let results = await Promise.all(promises);
+        console.log("Promise.all(promises) result :: ", results);
         // parseGithubIssues(file_arr, issues);
         return file_arr;
     }

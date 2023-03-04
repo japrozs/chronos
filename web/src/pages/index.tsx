@@ -14,7 +14,7 @@ export default function Home() {
                 style={{
                     borderColor: "#161c2a",
                 }}
-                className="px-6 py-3 bg-black border-b  top-0 sticky"
+                className="px-6 py-3 bg-black border-b z-10 top-0 sticky"
             >
                 <div className="flex items-center">
                     <Image
@@ -85,9 +85,9 @@ export default function Home() {
                             <path
                                 d="M10.25 5.75s-2.385 2.54-3 4.5l-1.5-1.5m8.5-.75a6.25 6.25 0 1 1-12.5 0 6.25 6.25 0 0 1 12.5 0Z"
                                 stroke="currentColor"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                             ></path>
                         </svg>
                         <p className="big_title text-3xl mid:text-5xl">
@@ -260,16 +260,50 @@ export default function Home() {
                         />
                     </div>
                     <p className="text-left text-tiny mr-auto ml-2.5">
-                        <p className="font-medium">Justin Watt</p>
-                        <p>Director of Ops & Marketing, MetaLab</p>
+                        <span className="font-medium">Justin Watt</span>
+                        <br />
+                        <span>Director of Ops & Marketing, MetaLab</span>
                     </p>
+                </div>
+            </div>
+            <div className="mx-auto mb-10 max-w-5xl">
+                <div className="bg-dark-compliment-hovered rounded-md p-5 mb-2.5 m-5">
+                    <div className="flex flex-col-reverse mid:flex-row items-center">
+                        <div className="w-full mid:p-5 mid:pl-8">
+                            <svg
+                                viewBox="0 0 41 41"
+                                className="w-7 h-auto text-primary-color mb-3"
+                            >
+                                <path
+                                    d="M8.1862 36.2334L32.37 36.2979C35.6645 36.3067 37.4544 34.5276 37.4651 31.2618L37.4922 23.0327C37.499 20.9898 37.2429 20.1259 36.3116 18.9438L31.9998 13.3071C30.1662 10.9284 29.2621 10.221 26.5718 10.2138L14.1562 10.1807C11.4803 10.1735 10.5717 10.876 8.70796 13.2449L4.35906 18.8584C3.43439 20.0501 3.15825 20.8981 3.15151 22.941L3.12438 31.1701C3.11362 34.4359 4.90606 36.2246 8.1862 36.2334ZM20.317 26.6411C18.1015 26.6352 16.7542 25.0922 16.7603 23.2363L16.761 23.0349C16.7633 22.3444 16.3626 21.6815 15.4995 21.6792L7.60123 21.6581C6.99699 21.6565 6.91229 21.1671 7.2013 20.7795L12.3304 14.1465C12.865 13.4574 13.4991 13.1426 14.3479 13.1448L26.3607 13.1769C27.2095 13.1792 27.8414 13.4974 28.3715 14.1893L33.4424 20.8495C33.7432 21.2388 33.6409 21.7276 33.0511 21.7261L25.1528 21.705C24.2896 21.7027 23.8846 22.3634 23.8824 23.0539L23.8817 23.2553C23.8756 25.1112 22.5182 26.647 20.317 26.6411Z"
+                                    fill="currentColor"
+                                ></path>
+                            </svg>
+
+                            <p className="text-3xl mb-2 global_title">
+                                Desktop & mobile
+                            </p>
+                            <p className="text text-gray-400">
+                                The Chronos desktop and mobile apps are about to
+                                launched for mac, iOS, Windows and Android so
+                                that you can search your files anywhere,
+                                anytime.
+                            </p>
+                        </div>
+                        <div className="w-full py-7 px-20">
+                            <img
+                                className="mx-auto max-w-xs w-full h-auto"
+                                src="/images/passing.svg"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="text-center mt-10">
                 <p className="big_title text-4xl mid:text-5xl">
                     Get started for free
                 </p>
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 font-medium text-gray-500">
                     Play around with it first. See if it sticks to your
                     workflow.
                 </p>
