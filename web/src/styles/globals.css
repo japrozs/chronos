@@ -9,6 +9,15 @@
     src: url("/fonts/inter-var.woff2") format("woff2");
 }
 
+@font-face {
+    font-family: "Menlo";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Menlo"),
+        url("https://fonts.cdnfonts.com/s/13494/Menlo-Regular.woff")
+            format("woff");
+}
+
 :root {
     background-color: #000;
     font-family: "inter-var", -apple-system, "Inter";
@@ -80,16 +89,6 @@ input[data-autocompleted] {
     line-height: 3.675rem;
     font-variation-settings: "wght" 669;
     letter-spacing: -0.0269em;
-}
-
-.toggle-checkbox:checked {
-    @apply: right-0 border-green-400;
-    right: 0;
-    border-color: blue;
-}
-.toggle-checkbox:checked + .toggle-label {
-    @apply: bg-green-400;
-    background-color: blue;
 }
 
 .text {

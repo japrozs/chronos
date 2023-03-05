@@ -7,4 +7,7 @@
 [ ] - Add Figma as provider  
 [x] - Figure out a way to get data from each provider on a different thread (somewhat done)
 [ ] - Improve `search` function  
+[ ] - Allow users to change personal details like email, etc.
+[ ] - Confirm user's email when signing up by sending them an OTP like code
+[ ] - Forgot password & change password
 [ ] - Create desktop app

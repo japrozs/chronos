@@ -17,7 +17,7 @@ export default function Home() {
                 style={{
                     borderColor: "#161c2a",
                 }}
-                className="px-6 py-3 bg-black border-b z-10 top-0 sticky"
+                className="px-6 py-3 bg-black border-b "
             >
                 <div className="flex items-center">
                     <Image
