@@ -11,13 +11,17 @@ import {
 import { Context } from "../types";
 import { User } from "../entities/User";
 import argon2 from "argon2";
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constants";
+import {
+    COOKIE_NAME,
+    FORGET_PASSWORD_PREFIX,
+    VERIFICATION_CODE_LENGTH,
+} from "../constants";
 import { UserInput } from "../schemas/UserInput";
 import { validateRegister } from "../utils/validateRegister";
 import { sendEmail } from "../utils/sendEmail";
 import { v4 } from "uuid";
 import { getConnection } from "typeorm";
-import util from "node:util";
+import crypto from "node:crypto";
 import { isAuth } from "../middleware/isAuth";
 import {
     getGoogleAccessToken,
@@ -199,6 +203,9 @@ export class UserResolver {
 
         const hashedPassword = await argon2.hash(options.password);
         let user;
+        const code = crypto
+            .randomBytes(VERIFICATION_CODE_LENGTH)
+            .toString("hex");
         try {
             const result = await getConnection()
                 .createQueryBuilder()
@@ -208,6 +215,7 @@ export class UserResolver {
                     name: options.name,
                     email: options.email,
                     password: hashedPassword,
+                    verificationCode: code,
                 })
                 .returning("*")
                 .execute();
@@ -230,6 +238,11 @@ export class UserResolver {
         const us = await User.findOne(user.id, {
             relations: [],
         });
+
+        sendEmail(
+            us.email,
+            `<a href="http://localhost:4000/verify/${code}">verify email</a>`
+        );
 
         return { user: us };
     }
@@ -299,6 +312,22 @@ export class UserResolver {
             }
         );
         return true;
+    }
+
+    @UseMiddleware(isAuth)
+    @Mutation(() => Boolean)
+    async verifyUser(@Arg("code") code: string, @Ctx() { req }: Context) {
+        const user: User = await User.findOne(req.session.userId);
+        if (user.verificationCode === code) {
+            await User.update(
+                { id: req.session.userId },
+                {
+                    verified: true,
+                }
+            );
+            return true;
+        }
+        return false;
     }
 
     @UseMiddleware(isAuth)

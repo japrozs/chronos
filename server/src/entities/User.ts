@@ -21,6 +21,13 @@ export class User extends BaseEntity {
 
     @Field()
     @Column({ default: false })
+    verified: boolean;
+
+    @Column()
+    verificationCode: string;
+
+    @Field()
+    @Column({ default: false })
     githubLinked: boolean;
 
     @Column({ default: "" })

@@ -1,6 +1,7 @@
 fragment RegularUser on User {
     id
     name
+    verified
     googleLinked
     githubLinked
     email

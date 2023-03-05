@@ -30,7 +30,10 @@ export default function Home() {
                     <div className="hidden md:flex ml-auto mr-0 items-center">
                         <div className="w-24">
                             <a href="/login">
-                                <Button label="Login" className="py-1.5" />
+                                <Button
+                                    label="Login"
+                                    className="border-none py-1.5"
+                                />
                             </a>
                         </div>
                         <div className="w-40 ml-3">

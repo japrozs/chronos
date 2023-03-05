@@ -50,7 +50,11 @@ const Signup: React.FC<SignupProps> = ({}) => {
                             if (res.data?.register.errors) {
                                 setErrors(toErrorMap(res.data.register.errors));
                             } else if (res.data?.register.user) {
-                                router.push("/app");
+                                if (!res.data.register.user.verified) {
+                                    router.push("/verify");
+                                } else {
+                                    router.push("/app");
+                                }
                                 await client.resetStore();
                             }
                         }}

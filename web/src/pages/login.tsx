@@ -14,7 +14,7 @@ interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {
     useIsAuth();
-    const [loginMut, { loading }] = useLoginMutation();
+    const [loginMut] = useLoginMutation();
     const client = useApolloClient();
     const router = useRouter();
     return (
@@ -50,7 +50,11 @@ const Login: React.FC<LoginProps> = ({}) => {
                                     toErrorMap(response.data.login.errors)
                                 );
                             } else if (response.data?.login.user) {
-                                if (typeof router.query.next === "string") {
+                                if (!response.data.login.user.verified) {
+                                    router.push("/verify");
+                                } else if (
+                                    typeof router.query.next === "string"
+                                ) {
                                     router.push(router.query.next);
                                 } else {
                                     // worked
@@ -74,7 +78,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                                     label="Password"
                                 />
                                 <Button
-                                    loading={loading}
+                                    loading={isSubmitting}
                                     type="submit"
                                     label="Log in"
                                     className="mt-5"

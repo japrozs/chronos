@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import "dotenv-safe/config";
-import { __prod__, COOKIE_NAME } from "./constants";
+import { __prod__, COOKIE_NAME, VERIFICATION_CODE_LENGTH } from "./constants";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
@@ -9,11 +9,14 @@ import session from "express-session";
 import connectRedis from "connect-redis";
 import cors from "cors";
 import { createConnection } from "typeorm";
+import crypto from "node:crypto";
 import { User } from "./entities/User";
 import path from "path";
 import { UserResolver } from "./resolvers/user";
 import { setupGoogleOAuth } from "./providers/google";
 import { setupGithubOAuth } from "./providers/github";
+import { setupFigmaOAuth } from "./providers/figma";
+import { expressIsAuth } from "./middleware/isAuth";
 
 const main = async () => {
     const conn = await createConnection({
@@ -25,7 +28,6 @@ const main = async () => {
         entities: [User],
     });
     await conn.runMigrations();
-
     const app = express();
 
     const RedisStore = connectRedis(session);
@@ -76,8 +78,29 @@ const main = async () => {
         cors: false,
     });
 
+    app.get("/verify/:code", expressIsAuth, async (req, res) => {
+        const code = req.params.code;
+        const user: User = await User.findOne(req.session.userId);
+        if (user.verificationCode === code) {
+            await User.update(
+                { id: req.session.userId },
+                {
+                    verified: true,
+                }
+            );
+            return res.redirect("http://localhost:3000/app");
+        }
+        return res.redirect("http://localhost:3000/incorrect");
+    });
+
+    // setup all the providers
     setupGoogleOAuth(app);
     setupGithubOAuth(app);
+    setupFigmaOAuth(app);
+
+    // setInterval(async () => {
+    //     console.log("background job");
+    // }, 1000 * 10); // every 10 seconds
 
     app.listen(parseInt(process.env.PORT), () => {
         console.log(`🚀 Server started on localhost:${process.env.PORT}`);
