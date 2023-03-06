@@ -17,6 +17,7 @@ import { setupGoogleOAuth } from "./providers/google";
 import { setupGithubOAuth } from "./providers/github";
 import { setupFigmaOAuth } from "./providers/figma";
 import { expressIsAuth } from "./middleware/isAuth";
+import { setupDropboxOAuth } from "./providers/dropbox";
 
 const main = async () => {
     const conn = await createConnection({
@@ -97,6 +98,7 @@ const main = async () => {
     setupGoogleOAuth(app);
     setupGithubOAuth(app);
     setupFigmaOAuth(app);
+    setupDropboxOAuth(app);
 
     // setInterval(async () => {
     //     console.log("background job");

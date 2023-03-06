@@ -3,6 +3,7 @@ import { MeQuery } from "@/generated/graphql";
 export enum Providers {
     GOOGLE = "google",
     GITHUB = "github",
+    // FIGMA = "figma",
 }
 
 export const getDisplayName = (provider: string): string => {
@@ -11,6 +12,8 @@ export const getDisplayName = (provider: string): string => {
             return "Google";
         case Providers.GITHUB:
             return "Github";
+        // case Providers.FIGMA:
+        //     return "Figma";
         default:
             return "Unknown";
     }
@@ -25,6 +28,9 @@ export const isProviderLinked = (user: MeQuery["me"], provider: string) => {
         case Providers.GITHUB:
             result = user?.githubLinked || false;
             break;
+        // case Providers.FIGMA:
+        //     result = user?.figmaLinked || false;
+        //     break;
         default:
             result = false;
     }

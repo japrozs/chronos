@@ -3,7 +3,8 @@ import { Application, Request, Response } from "express";
 import querystring from "querystring";
 import { User } from "../entities/User";
 import { GOOGLE_REDIRECT_URI } from "../constants";
-import { File } from "src/schemas/File";
+import { File } from "../schemas/File";
+import { expressIsAuth } from "../middleware/isAuth";
 
 interface OAuthFields {
     code: string;
@@ -195,12 +196,16 @@ const googleOAuthCallback = async (req: Request, res: Response) => {
 
 export const setupGoogleOAuth = (app: Application) => {
     // Getting login URL
-    app.get("/auth/google", (req: Request, res: Response) => {
+    app.get("/auth/google", expressIsAuth, (req: Request, res: Response) => {
         initGoogleOAuth(req, res);
     });
 
     // Getting the user from Google with the code
-    app.get(`/${GOOGLE_REDIRECT_URI}`, async (req: Request, res: Response) => {
-        googleOAuthCallback(req, res);
-    });
+    app.get(
+        `/${GOOGLE_REDIRECT_URI}`,
+        expressIsAuth,
+        async (req: Request, res: Response) => {
+            googleOAuthCallback(req, res);
+        }
+    );
 };

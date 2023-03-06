@@ -5,3 +5,4 @@ export const VERIFICATION_CODE_LENGTH = 32;
 export const GOOGLE_REDIRECT_URI = "auth/google/callback";
 export const GITHUB_REDIRECT_URI = "auth/github/callback";
 export const FIGMA_REDIRECT_URI = "auth/figma/callback";
+export const DROPBOX_REDIRECT_URI = "auth/dropbox/callback";

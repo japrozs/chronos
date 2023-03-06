@@ -3,6 +3,7 @@ fragment RegularUser on User {
     name
     verified
     googleLinked
+    figmaLinked
     githubLinked
     email
     createdAt

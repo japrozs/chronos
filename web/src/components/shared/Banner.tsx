@@ -9,12 +9,14 @@ export const Banner: React.FC<BannerProps> = ({}) => {
         <>
             {open && (
                 <>
-                    <div className="hidden mid:block mid:flex items-center py-2.5 mid:bg-scribbles border-b border-gray-900">
+                    <div className="hidden mid:block mid:flex items-center py-2.5 mid:bg-scribbles-blue border-b border-gray-900">
                         <div className="mx-auto flex items-center">
                             <span className="font-semibold mr-2 text-primary-color">
                                 ✨ New!
                             </span>
-                            <p>Chronos is free for the first 1000 users</p>
+                            <p className="font-medium">
+                                Chronos is free for the first 1000 users
+                            </p>
                         </div>
                         <RxCross2
                             onClick={() => setOpen(false)}
@@ -22,7 +24,7 @@ export const Banner: React.FC<BannerProps> = ({}) => {
                         />
                     </div>
                     <div className="block mid:hidden py-2.5 border-b border-gray-800">
-                        <p className="mx-auto px-2">
+                        <p className="mx-auto px-2 font-medium">
                             <span className="font-semibold mr-2 text-primary-color">
                                 ✨ New!
                             </span>

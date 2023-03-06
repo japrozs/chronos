@@ -36,6 +36,7 @@ import {
     parseGithubRepos,
 } from "../providers/github";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
+import { getFigmaAccessToken, getFigmaFiles } from "../providers/figma";
 
 @ObjectType()
 export class FieldError {
@@ -159,13 +160,15 @@ export class UserResolver {
     @Query(() => [File])
     async getFiles(@Ctx() { req }: Context) {
         const user: User = await User.findOne(req.session.userId);
-        const token = await getGoogleAccessToken(user.googleRefreshToken);
         const promises: Promise<unknown>[] = [];
         let file_arr: File[] = [];
         if (user.googleLinked) {
             promises.push(
                 new Promise(async (resolve) => {
                     // result from google drive
+                    const token = await getGoogleAccessToken(
+                        user.googleRefreshToken
+                    );
                     await parseGoogleFilesResult(
                         file_arr,
                         await getGoogleDriveFiles(token)
@@ -181,6 +184,17 @@ export class UserResolver {
                     const repos = await getGithubRepos(user.githubAccessToken);
                     // const issues = await getGithubIssues(user.githubAccessToken, repos);
                     parseGithubRepos(file_arr, repos);
+                    resolve(true);
+                })
+            );
+        }
+        if (user.figmaLinked) {
+            promises.push(
+                new Promise(async (resolve) => {
+                    const token = await getFigmaAccessToken(
+                        user.figmaRefreshToken
+                    );
+                    await getFigmaFiles(token);
                     resolve(true);
                 })
             );

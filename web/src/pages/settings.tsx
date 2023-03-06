@@ -37,13 +37,12 @@ const Settings: React.FC<SettingsProps> = ({}) => {
                         <Formik
                             initialValues={{
                                 name: data?.me?.name,
-                                email: data?.me?.email,
                             }}
                             onSubmit={async (values, { setErrors }) => {
                                 alert("updating profile");
                             }}
                         >
-                            {({ isSubmitting, values: { name, email } }) => (
+                            {({ isSubmitting, values: { name } }) => (
                                 <Form>
                                     <InputField
                                         name="name"
@@ -51,26 +50,39 @@ const Settings: React.FC<SettingsProps> = ({}) => {
                                         label="Name"
                                         fullWidth
                                     />
-                                    <InputField
-                                        name="email"
-                                        placeholder="dwight@dundermifflin.com"
-                                        label="Email"
-                                        fullWidth
-                                    />
-                                    {(email?.trim() !== data?.me?.email ||
-                                        name?.trim() !== data?.me?.name) && (
-                                        <div className="transition-all ml-auto mr-0 w-44 mt-5">
-                                            <Button
-                                                loading={isSubmitting}
-                                                type="submit"
-                                                label="Update details"
-                                                colored
-                                            />
-                                        </div>
-                                    )}
+                                    <div
+                                        className={
+                                            "transition-all ml-auto mr-0 w-44 mt-5"
+                                        }
+                                    >
+                                        <Button
+                                            loading={isSubmitting}
+                                            disabled={
+                                                name?.trim() === data?.me?.name
+                                            }
+                                            type="submit"
+                                            label="Update details"
+                                            colored
+                                        />
+                                    </div>
                                 </Form>
                             )}
                         </Formik>
+                        <label
+                            className={
+                                "text-sm text-text-compliment-color text-opacity-60"
+                            }
+                        >
+                            Email (can't be changed)
+                        </label>
+                        <br />
+                        <p
+                            className={
+                                "text-gray-300 transition-all text-smol placeholder-gray-600 py-1.5 px-3 mt-1.5 mb-1.5 bg-dark-compliment border border-gray-800 rounded-md outline-none focus:ring-2 focus:ring-border-blue-100"
+                            }
+                        >
+                            {data?.me?.email}
+                        </p>
                         <div className="mt-7">
                             <p className="global_title text-3xl mb-2">
                                 Integrations

@@ -10,7 +10,7 @@ module.exports = {
         extend: {
             backgroundImage: {
                 scribbles: "url('/images/scribbles.png')",
-                scribbles_blue: "url('/images/scribbles_blue.png')",
+                "scribbles-blue": "url('/images/scribbles_blue.png')",
             },
             screens: {
                 mid: "870px",

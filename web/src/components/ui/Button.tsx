@@ -6,6 +6,7 @@ type ButtonProps = {
     label: string;
     className?: string;
     colored?: boolean;
+    disabled?: boolean;
     loading?: boolean;
     icon?: IconType;
 } & React.DetailedHTMLProps<
@@ -16,6 +17,7 @@ type ButtonProps = {
 export const Button: React.FC<ButtonProps> = ({
     label,
     colored,
+    disabled,
     icon: Icon,
     loading = false,
     className,
@@ -23,17 +25,20 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
     return (
         <button
+            disabled={disabled}
             style={{
                 fontFamily: "Inter",
                 fontWeight: 444,
             }}
             className={`${
-                loading && "cursor-not-allowed"
+                (loading || disabled) && "cursor-not-allowed"
             } flex items-center justify-center group button-component ${
                 colored
                     ? "bg-primary-color border-blue-600 hover:opacity-90"
                     : "bg-dark-compliment border-gray-800 hover:bg-dark-compliment-hovered"
-            } focus:ring-2 focus:ring-border-blue-100 transition-all text-smol py-1.5 w-full rounded-md border  ${className}`}
+            } focus:ring-2 ${
+                disabled && "opacity-40 hover:opacity-40"
+            } focus:ring-border-blue-100 transition-all text-smol py-1.5 w-full rounded-md border  ${className}`}
             {...props}
         >
             {loading ? (

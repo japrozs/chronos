@@ -4,6 +4,7 @@ import querystring from "querystring";
 import { User } from "../entities/User";
 import { GITHUB_REDIRECT_URI } from "../constants";
 import { File } from "../schemas/File";
+import { expressIsAuth } from "../middleware/isAuth";
 
 const genOAuthURI = () => {
     const rootUrl = "https://github.com/login/oauth/authorize";
@@ -223,12 +224,16 @@ const githubOAuthCallback = async (req: Request, res: Response) => {
 
 export const setupGithubOAuth = (app: Application) => {
     // Getting login URL
-    app.get("/auth/github", (req: Request, res: Response) => {
+    app.get("/auth/github", expressIsAuth, (req: Request, res: Response) => {
         initGithubOAuth(req, res);
     });
 
     // Getting the user from Google with the code
-    app.get(`/${GITHUB_REDIRECT_URI}`, async (req: Request, res: Response) => {
-        githubOAuthCallback(req, res);
-    });
+    app.get(
+        `/${GITHUB_REDIRECT_URI}`,
+        expressIsAuth,
+        async (req: Request, res: Response) => {
+            githubOAuthCallback(req, res);
+        }
+    );
 };

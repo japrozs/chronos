@@ -41,6 +41,13 @@ export class User extends BaseEntity {
     googleRefreshToken: string;
 
     @Field()
+    @Column({ default: false })
+    figmaLinked: boolean;
+
+    @Column({ default: "" })
+    figmaRefreshToken: string;
+
+    @Field()
     @Column({ unique: true })
     email: string;
 

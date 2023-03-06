@@ -1,0 +1,12 @@
+appId: com.chronos.japroz
+productName: Chronos
+copyright: Copyright © 2023 - Present Japroz Singh Saini
+directories:
+    output: dist
+    buildResources: resources
+files:
+    - from: .
+      filter:
+          - package.json
+          - app
+publish: null

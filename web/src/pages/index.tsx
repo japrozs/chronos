@@ -114,6 +114,34 @@ export default function Home() {
                     />
                 </div>
             </div>
+            <div className="my-20">
+                <p className="text-center title mb-7">
+                    <span className="bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 inline-block text-transparent bg-clip-text">
+                        Simple,
+                    </span>{" "}
+                    yet{" "}
+                    <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 inline-block text-transparent bg-clip-text">
+                        powerful
+                    </span>{" "}
+                </p>
+                <p className="text-center lora shadow pt-3 mx-auto mid:max-w-3xl text-xl mid:text-2xl text-gray-100">
+                    "Chronos has been amazing to use for finding files in my
+                    messy Google Drive, OneDrive and Dropbox accounts"
+                </p>
+                <div className="mt-5 flex items-center">
+                    <div className="ml-auto mr-2.5">
+                        <img
+                            className="shadow-lg"
+                            src="https://www.notion.so/cdn-cgi/image/format=auto,width=128,quality=100/front-static/shared/logos/color/metalab.png"
+                        />
+                    </div>
+                    <p className="text-left text-tiny mr-auto ml-2.5">
+                        <span className="font-medium">John Doe</span>
+                        <br />
+                        <span>Founder and CEO, ACME Inc.</span>
+                    </p>
+                </div>
+            </div>
             <div className="mx-auto max-w-5xl">
                 <div className="bg-dark-compliment-hovered rounded-md p-5 mb-2.5 m-5">
                     <div className="flex flex-col mid:flex-row items-center">
