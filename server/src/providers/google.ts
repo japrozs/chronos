@@ -32,7 +32,8 @@ export interface GoogleFileObject {
     originalFilename: string;
 }
 
-export const parseGoogleFilesResult = (arr: File[], result_arr: any) => {
+export const parseGoogleFilesResult = (result_arr: any) => {
+    const arr: File[] = [];
     for (const object in result_arr) {
         const resultObj = result_arr[object] as { files: GoogleFileObject[] };
         for (const item in resultObj.files) {
@@ -51,6 +52,7 @@ export const parseGoogleFilesResult = (arr: File[], result_arr: any) => {
             });
         }
     }
+    return arr;
 };
 
 export const getGoogleDriveFiles = async (token: string) => {

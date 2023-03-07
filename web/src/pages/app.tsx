@@ -1,18 +1,10 @@
-import { Button } from "@/components/ui/Button";
-import Image from "next/image";
-import React, {
-    KeyboardEvent,
-    LegacyRef,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
-import { BsThreeDots } from "react-icons/bs";
+import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FiSearch } from "react-icons/fi";
 import { ResultCard } from "@/components/ui/ResultCard";
 import { Spinner } from "@/components/shared/Spinner";
 import {
+    GetFilesQuery,
     RegularFileFragment,
     useGetFilesQuery,
     useMeQuery,
@@ -21,9 +13,10 @@ import { search, SearchResult } from "@/utils/search";
 import { useIsAuth } from "@/utils/useIsAuth";
 import { BiQuestionMark } from "react-icons/bi";
 import { InfoModal } from "@/components/modals/InfoModal";
-import { SettingsModal } from "@/components/modals/SettingsModal";
 import { Navbar } from "@/components/shared/Navbar";
 import { Meta } from "@/components/shared/Meta";
+import { LOCAL_STORAGE_KEY } from "@/constants";
+import { useStore } from "@/store";
 
 interface AppProps {}
 
@@ -31,7 +24,19 @@ const App: React.FC<AppProps> = ({}) => {
     useIsAuth();
     const [query, setQuery] = useState("");
     const { data: me } = useMeQuery();
+    const [dataLoading, setDataLoading] = useState(false);
     const { data, loading } = useGetFilesQuery();
+    // const { files, setFiles } = useStore();
+    // console.log("files ::", files);
+    // let data: GetFilesQuery["getFiles"] = [];
+    // if (files.length == 0) {
+    //     const { data: filesData, loading } = useGetFilesQuery();
+    //     data = filesData?.getFiles || [];
+    // } else {
+    //     data = files;
+    // }
+    // setFiles(data);
+
     const [open, setOpen] = useState(false);
     const [result, setResult] = useState({});
 

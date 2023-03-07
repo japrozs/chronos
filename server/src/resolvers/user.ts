@@ -16,6 +16,7 @@ import {
     FORGET_PASSWORD_PREFIX,
     VERIFICATION_CODE_LENGTH,
 } from "../constants";
+import { Worker } from "worker_threads";
 import { UserInput } from "../schemas/UserInput";
 import { validateRegister } from "../utils/validateRegister";
 import { sendEmail } from "../utils/sendEmail";
@@ -37,6 +38,7 @@ import {
 } from "../providers/github";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 import { getFigmaAccessToken, getFigmaFiles } from "../providers/figma";
+import path from "path";
 
 @ObjectType()
 export class FieldError {
@@ -169,10 +171,14 @@ export class UserResolver {
                     const token = await getGoogleAccessToken(
                         user.googleRefreshToken
                     );
-                    await parseGoogleFilesResult(
-                        file_arr,
-                        await getGoogleDriveFiles(token)
+                    const driveFiles = await getGoogleDriveFiles(token);
+                    const worker = new Worker(
+                        path.join(__dirname, "../workers/googleWorker.js")
                     );
+                    worker.postMessage(driveFiles);
+                    worker.on("message", (result) => {
+                        file_arr.push(...result);
+                    });
                     resolve(true);
                 })
             );
@@ -180,25 +186,29 @@ export class UserResolver {
         if (user.githubLinked) {
             promises.push(
                 new Promise(async (resolve) => {
-                    // result from github API
-                    const repos = await getGithubRepos(user.githubAccessToken);
-                    // const issues = await getGithubIssues(user.githubAccessToken, repos);
-                    parseGithubRepos(file_arr, repos);
-                    resolve(true);
-                })
-            );
-        }
-        if (user.figmaLinked) {
-            promises.push(
-                new Promise(async (resolve) => {
-                    const token = await getFigmaAccessToken(
-                        user.figmaRefreshToken
+                    const worker = new Worker(
+                        path.join(__dirname, "../workers/githubWorker.js")
                     );
-                    await getFigmaFiles(token);
+                    worker.postMessage(user.githubAccessToken);
+                    worker.on("message", (result) => {
+                        file_arr.push(...result);
+                    });
                     resolve(true);
                 })
             );
         }
+        // if (user.figmaLinked) {
+        //     promises.push(
+        //         new Promise(async (resolve) => {
+        //             const token = await getFigmaAccessToken(
+        //                 user.figmaRefreshToken
+        //             );
+        //             await getFigmaFiles(token);
+        //             resolve(true);
+        //         })
+        //     );
+        // }
+        console.log(file_arr);
         let results = await Promise.all(promises);
         console.log("Promise.all(promises) result :: ", results);
         // parseGithubIssues(file_arr, issues);
@@ -357,6 +367,12 @@ export class UserResolver {
                 break;
             case "github":
                 key = "githubLinked";
+                break;
+            case "figma":
+                key = "figmaLinked";
+                break;
+            case "dropbox":
+                key = "dropboxLinked";
                 break;
             default:
                 key = "";

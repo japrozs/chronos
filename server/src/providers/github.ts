@@ -118,7 +118,6 @@ export const getGithubIssues = async (
 };
 
 export const parseGithubRepos = (
-    arr: File[],
     repos: {
         name: string;
         html_url: string;
@@ -126,6 +125,7 @@ export const parseGithubRepos = (
         default_branch: string;
     }[]
 ) => {
+    const arr: File[] = [];
     for (let i = 0; i < repos.length; ++i) {
         console.log("repo :: ", repos[i].name);
         arr.push({
@@ -138,6 +138,7 @@ export const parseGithubRepos = (
             extension: repos[i].default_branch,
         });
     }
+    return arr;
 };
 
 export const parseGithubIssues = (

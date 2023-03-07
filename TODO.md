@@ -11,3 +11,5 @@
 [ ] - Confirm user's email when signing up by sending them an OTP like code
 [ ] - Forgot password & change password
 [ ] - Create desktop app
+[ ] - add tooltips for navbar buttons
+[x] - Use localStorage to store the results in a redux like store
