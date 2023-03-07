@@ -5,6 +5,7 @@ fragment RegularUser on User {
     googleLinked
     figmaLinked
     githubLinked
+    dropboxLinked
     email
     createdAt
     updatedAt

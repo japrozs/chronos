@@ -48,6 +48,13 @@ export class User extends BaseEntity {
     figmaRefreshToken: string;
 
     @Field()
+    @Column({ default: false })
+    dropboxLinked: boolean;
+
+    @Column({ default: "" })
+    dropboxRefreshToken: string;
+
+    @Field()
     @Column({ unique: true })
     email: string;
 

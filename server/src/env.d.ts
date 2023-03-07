@@ -12,6 +12,8 @@ declare global {
       GITHUB_CLIENT_SECRET: string;
       FIGMA_CLIENT_ID: string;
       FIGMA_CLIENT_SECRET: string;
+      DROPBOX_CLIENT_ID: string;
+      DROPBOX_CLIENT_SECRET: string;
     }
   }
 }
